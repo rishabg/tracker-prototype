@@ -24,6 +24,8 @@ class AppWindow
     windowOpts =
       width: 800
       height: 600
+      frame: false
+      fullscreen: true
       title: options.title ? "You Should Set options.title"
       'web-preferences':
         'subpixel-font-scaling': true
@@ -32,6 +34,10 @@ class AppWindow
     windowOpts = _.extend(windowOpts, @loadSettings)
 
     @window = new BrowserWindow(windowOpts)
+
+    @window.on 'close', (e) =>
+      e.preventDefault()
+      false
 
     @window.on 'closed', (e) =>
       this.emit 'closed', e
@@ -64,5 +70,5 @@ class AppWindow
     @window.toggleDevTools()
 
   close: ->
-    @window.close()
-    @window = null
+    # @window.close()
+    # @window = null
